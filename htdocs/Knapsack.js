@@ -94,12 +94,28 @@ function getLabel(LabelName, offset, fontSize = 14) {
 	Label.position(20, windowHeight / 2 + offset);
 	Label.style('color', '#ffffff');
 	Label.style('font-size', fontSize + 'px');
+	Labels.push(Label);
 }
 
 function draw() {
 	background(0, 0, 0);
 
 	plot.defaultDraw();
+}
+
+function windowResized() {
+	resizeCanvas(windowWidth, windowHeight);
+	plot.setDim(windowWidth - 100, windowHeight / 2);
+	testSelect.position(20, windowHeight / 2 + 180);
+	StartBtn.position(65, windowHeight / 2 + 180);
+	inputFile.position(20, windowHeight / 2 + 150);
+	Labels[0].position(20, windowHeight / 2 + 190);
+	for (z = 1, off = 265; z < Labels.length; z++, off += 50) {
+		Labels[z].position(20, windowHeight / 2 + off);
+	}
+	for (z = 0, off = 300; z < inputFields.length; z++, off += 50) {
+		inputFields[z].position(20, windowHeight / 2 + off);
+	}
 }
 
 var timer;
