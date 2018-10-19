@@ -46,10 +46,6 @@ function setup() {
 	bestVal.position(windowWidth / 2 - 100, windowHeight / 2 + 150);
 	bestVal.style('color', '#0cff00');
 	bestVal.style('font-size', "25px");
-	BestC = createP("");
-	BestC.position(windowWidth / 2 - 100, windowHeight / 2 + 190);
-	BestC.style('color', '#0cff00');
-	BestC.style('font-size', "20px");
 
 	testSelect = createSelect();
 	testSelect.position(20, windowHeight / 2 + 180);
@@ -104,7 +100,6 @@ function draw() {
 }
 
 function windowResized() {
-	resizeCanvas(windowWidth, windowHeight);
 	plot.setDim(windowWidth - 100, windowHeight / 2);
 	testSelect.position(20, windowHeight / 2 + 180);
 	StartBtn.position(65, windowHeight / 2 + 180);
@@ -116,6 +111,8 @@ function windowResized() {
 	for (z = 0, off = 300; z < inputFields.length; z++, off += 50) {
 		inputFields[z].position(20, windowHeight / 2 + off);
 	}
+	resizeCanvas(windowWidth, inputFields[inputFields.length - 1].y + 100);
+	bestVal.position(windowWidth / 2 - 100, windowHeight / 2 + 150);
 }
 
 var timer;
@@ -228,15 +225,6 @@ function mutateChildren() {
 	}
 }
 
-function ItemDisplay(chromosome) {
-	items = [];
-	for (l = 0; l < chromosome.length; l++) {
-		if (chromosome[l]) {
-			items.push(l + 1);
-		}
-	}
-	return '[' + items.join(',') + ']';
-}
 
 function GeneticAlgorithm() {
 	if (generation > Generations) {
@@ -244,7 +232,6 @@ function GeneticAlgorithm() {
 	}
 	best = BestFitness();
 	bestVal.html("Best Value : " + BestFitnessEver);
-	BestC.html("Items Taken : " + ItemDisplay(BestChromosome));
 	plot.addPoint(new GPoint(generation, best));
 	nextGeneration();
 	generation++;
